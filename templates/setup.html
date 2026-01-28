@@ -1,1 +1,246 @@
-
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚙️ إعداد Binance API</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .setup-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+            margin-left: 10px;
+        }
+        
+        .checkbox-group label {
+            margin: 0;
+            color: #555;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #fcc;
+            text-align: center;
+        }
+        
+        .info-box {
+            background: #f0f8ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-right: 4px solid #4facfe;
+        }
+        
+        .info-box h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .info-box ol {
+            padding-right: 20px;
+            color: #555;
+        }
+        
+        .info-box li {
+            margin-bottom: 10px;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            color: #4facfe;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 480px) {
+            .setup-box {
+                padding: 20px;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">⚙️</div>
+            <h1 class="title">إعداد Binance API</h1>
+            <p class="subtitle">أدخل مفاتيح API للاتصال بحساب Binance الخاص بك</p>
+        </div>
+        
+        <div class="setup-box">
+            {% if error %}
+            <div class="error">{{ error }}</div>
+            {% endif %}
+            
+            <form method="POST" action="/setup">
+                <div class="form-group">
+                    <label for="username">👤 اسم المستخدم (اختياري):</label>
+                    <input type="text" id="username" name="username" 
+                           placeholder="أدخل اسمك" value="user">
+                </div>
+                
+                <div class="form-group">
+                    <label for="api_key">🔑 Binance API Key:</label>
+                    <input type="text" id="api_key" name="api_key" required
+                           placeholder="أدخل API Key هنا">
+                </div>
+                
+                <div class="form-group">
+                    <label for="api_secret">🔒 Binance API Secret:</label>
+                    <input type="password" id="api_secret" name="api_secret" required
+                           placeholder="أدخل API Secret هنا">
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="testnet" name="testnet" checked>
+                    <label for="testnet">✅ استخدام Testnet (مستحسن للتدريب)</label>
+                </div>
+                
+                <div class="warning">
+                    ⚠️ <strong>ابدأ بـ Testnet أولاً!</strong><br>
+                    لا تستخدم الحساب الحقيقي إلا بعد التأكد من عمل النظام
+                </div>
+                
+                <button type="submit" class="btn">🚀 حفظ والبدء</button>
+            </form>
+            
+            <div class="info-box">
+                <h3>📝 كيفية الحصول على مفاتيح API:</h3>
+                <ol>
+                    <li>سجل الدخول إلى <a href="https://testnet.binance.vision" target="_blank">Binance Testnet</a></li>
+                    <li>اذهب إلى [API Management]</li>
+                    <li>أنشئ مفتاح API جديد</li>
+                    <li>اسمح بـ "Enable Reading" و "Enable Spot & Margin Trading"</li>
+                    <li>انسخ API Key و API Secret</li>
+                    <li>الصقهما في النموذج أعلاه</li>
+                </ol>
+                <p style="margin-top: 15px; color: #666; font-size: 0.9rem;">
+                    💡 Testnet: شبكة تجريبية بأموال وهمية - مثالية للتدريب
+                </p>
+            </div>
+            
+            <a href="/" class="back-btn">↩ الرجوع لتسجيل الدخول</a>
+        </div>
+    </div>
+</body>
+</html>
